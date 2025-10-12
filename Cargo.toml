@@ -1,0 +1,12 @@
+[package]
+name = "meteora-sdk"
+version = "0.1.0"
+edition = "2024"
+authors = ["happyboy <superhappyboy1995@gmail.com>"]
+description = "meteora sdk"
+keywords = ["trade", "crypto", "finance", "solana", "meteora"]
+license = "GPL-3.0"
+readme = "README.md"
+repository = "https://github.com/0xhappyboy/meteora-sdk"
+
+[dependencies]
