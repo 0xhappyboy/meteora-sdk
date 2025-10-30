@@ -2,7 +2,7 @@
     Meteora SDK
 </h1>
 <h4 align="center">
-一个用于与 Solana 上的 Meteora DEX 协议交互的 Rust SDK。提供完整的交易、价格查询、流动性池管理和事件监听功能.
+一个用于与 Solana 上的 Meteora DEX 协议交互的 Meteora SDK。提供完整的交易、价格查询、流动性池管理和事件监听功能.
 </h4>
 <p align="center">
   <a href="https://github.com/0xhappyboy/meteora-sdk/LICENSE"><img src="https://img.shields.io/badge/License-GPL3.0-d1d1f6.svg?style=flat&labelColor=1C2C2E&color=BEC5C9&logo=googledocs&label=license&logoColor=BEC5C9" alt="License"></a>
