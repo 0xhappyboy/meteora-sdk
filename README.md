@@ -53,9 +53,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let price_feed = PriceFeed::new(client.clone());
     let usdc_mint = pubkey!("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
     let price = price_feed.get_current_price(&usdc_mint).await?;
-    println!("USDC 价格: {:.6} SOL (${:.2})", price.sol_price, price.usd_price);
+    println!("USDC Price: {:.6} SOL (${:.2})", price.sol_price, price.usd_price);
     let secure_price = price_feed.get_secure_price(&usdc_mint).await?;
-    println!("安全价格: {:.6} SOL", secure_price.sol_price);
+    println!("Safe: {:.6} SOL", secure_price.sol_price);
     Ok(())
 }
 ```
