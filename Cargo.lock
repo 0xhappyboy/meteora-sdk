@@ -1980,7 +1980,7 @@ dependencies = [
 
 [[package]]
 name = "meteora-sdk"
-version = "0.6.1"
+version = "0.6.5"
 dependencies = [
  "borsh 1.5.7",
  "bytemuck",
