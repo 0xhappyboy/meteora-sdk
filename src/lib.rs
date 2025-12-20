@@ -4,9 +4,11 @@ use solana_network_sdk::{
 };
 use std::sync::Arc;
 
-use crate::liquidity::{
-    dlmmpool::{DLMMLiquidityPool, DLMMLiquidityPoolData}, dynpool::{DAMMLiquidityPool, DAMMLiquidityPoolData}, dynv2pool::{DAMMV2LiquidityPool, DAMMV2LiquidityPoolData}
-};
+use crate::{dbc::{DynamicBondingCurvePool, DynamicBondingCurvePoolData}, liquidity::{
+    dlmmpool::{DLMMLiquidityPool, DLMMLiquidityPoolData},
+    dynpool::{DAMMLiquidityPool, DAMMLiquidityPoolData},
+    dynv2pool::{DAMMV2LiquidityPool, DAMMV2LiquidityPoolData},
+}};
 
 pub mod dbc;
 pub mod liquidity;
@@ -90,6 +92,28 @@ impl Meteora {
             .await
             .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
         let pool = DLMMLiquidityPool::get_liquidity_pool_info(&v)
+            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
+        Ok(pool)
+    }
+
+    /// get dynv2 meteora liquidity pool
+    /// Example
+    /// ```rust
+    /// let sol = Solana::new(solana_network_sdk::types::Mode::MAIN);
+    /// let meteora = Meteora::new(Arc::new(sol));
+    /// // BjxkogRUDnb72MSBTfsyuq54yntqxyVKozK9WywMszvZ SOL-USDC pool
+    /// let pool_data = meteora.get_liquidity_pool_dlmm("BjxkogRUDnb72MSBTfsyuq54yntqxyVKozK9WywMszvZ").await;
+    /// ```
+    pub async fn get_liquidity_pool_dbc(
+        &self,
+        address: &str,
+    ) -> UnifiedResult<DynamicBondingCurvePoolData, String> {
+        let v = self
+            .solana
+            .get_account_data(address)
+            .await
+            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
+        let pool = DynamicBondingCurvePool::get_dbc_pool_info(&v)
             .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
         Ok(pool)
     }

@@ -19,6 +19,30 @@ cargo add meteora-sdk
 
 ## Example
 
+### Retrieves information about the dynamic bond curve pool at a specified address.
+
+```rust
+#[cfg(test)]
+mod tests {
+    use std::sync::Arc;
+
+    use super::*;
+    use crate::Meteora;
+    use solana_network_sdk::Solana;
+
+    #[tokio::test]
+    async fn test_dbc_pool() {
+        let sol = Solana::new(solana_network_sdk::types::Mode::MAIN).unwrap();
+        let meteora = Meteora::new(Arc::new(sol));
+        let pool_data = meteora
+            .get_liquidity_pool_dbc("FDT74DRFm6d2zig9ZT1ABT3NJMPooWXs1tCMvNzvd2jV")
+            .await
+            .unwrap();
+        println!("Pool Data: {:?}", pool_data);
+    }
+}
+```
+
 ### Retrieve information about the DLMM liquidity pool at the specified address.
 
 ```rust
