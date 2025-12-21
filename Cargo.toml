@@ -1,6 +1,6 @@
 [package]
 name = "meteora-sdk"
-version = "0.6.8"
+version = "0.7.0"
 edition = "2024"
 authors = ["happyboy <superhappyboy1995@gmail.com>"]
 description = "meteora sdk"
@@ -30,4 +30,4 @@ rand = "0.9.2"
 spl-token-interface = "2.0.0"
 log = "0.4.28"
 bytemuck = "1.24.0"
-solana-network-client = "0.1.0"
+solana-network-client = "0.1.5"

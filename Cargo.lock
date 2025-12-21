@@ -1886,7 +1886,7 @@ dependencies = [
 
 [[package]]
 name = "meteora-sdk"
-version = "0.6.8"
+version = "0.7.0"
 dependencies = [
  "borsh 1.5.7",
  "bytemuck",
@@ -4129,12 +4129,13 @@ dependencies = [
 
 [[package]]
 name = "solana-network-client"
-version = "0.1.0"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e204b1f033aada2bf80d428bf8d984ad8db812d92100a08a6fbce623ac9e1bc7"
+checksum = "70e2794f88b7bc36230fc9fd69d703498b7993a5be82e6f5c09527760445b72c"
 dependencies = [
  "solana-client",
  "solana-sdk",
+ "tokio",
 ]
 
 [[package]]
