@@ -1,14 +1,17 @@
-use solana_network_sdk::{
-    Solana,
-    types::{UnifiedError, UnifiedResult},
-};
-use std::sync::Arc;
+use std::{str::FromStr, sync::Arc};
 
-use crate::{dbc::{DynamicBondingCurvePool, DynamicBondingCurvePoolData}, liquidity::{
-    dlmmpool::{DLMMLiquidityPool, DLMMLiquidityPoolData},
-    dynpool::{DAMMLiquidityPool, DAMMLiquidityPoolData},
-    dynv2pool::{DAMMV2LiquidityPool, DAMMV2LiquidityPoolData},
-}};
+use solana_network_client::SolanaClient;
+use solana_sdk::pubkey::Pubkey;
+use solana_transaction::Address;
+
+use crate::{
+    dbc::{DynamicBondingCurvePool, DynamicBondingCurvePoolData},
+    liquidity::{
+        dlmmpool::{DLMMLiquidityPool, DLMMLiquidityPoolData},
+        dynpool::{DAMMLiquidityPool, DAMMLiquidityPoolData},
+        dynv2pool::{DAMMV2LiquidityPool, DAMMV2LiquidityPoolData},
+    },
+};
 
 pub mod dbc;
 pub mod liquidity;
@@ -16,7 +19,7 @@ pub mod liquidity;
 /// A client for interacting with the Meteora protocol on Solana
 /// Provides methods to fetch account data, program accounts, and SPL token accounts
 pub struct Meteora {
-    pub solana: Arc<Solana>,
+    pub solana_client: Arc<SolanaClient>,
 }
 
 impl Meteora {
@@ -26,8 +29,8 @@ impl Meteora {
     /// let sol = Solana::new(solana_network_sdk::types::Mode::MAIN);
     /// let raydium = Meteora::new(Arc::new(sol));
     /// ```
-    pub fn new(solana: Arc<Solana>) -> Self {
-        Self { solana: solana }
+    pub fn new(solana_client: Arc<SolanaClient>) -> Self {
+        Self { solana_client }
     }
 
     /// get dynv2 meteora liquidity pool
@@ -41,14 +44,19 @@ impl Meteora {
     pub async fn get_liquidity_pool_dynv2(
         &self,
         address: &str,
-    ) -> UnifiedResult<DAMMV2LiquidityPoolData, String> {
+    ) -> Result<DAMMV2LiquidityPoolData, String> {
         let v = self
-            .solana
-            .get_account_data(address)
+            .solana_client
+            .client_arc()
+            .get_account_data(
+                &Pubkey::from_str(address)
+                    .map_err(|e| format!("{:?}", e))
+                    .unwrap(),
+            )
             .await
-            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
-        let pool = DAMMV2LiquidityPool::get_liquidity_pool_info(&v)
-            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
+            .map_err(|e| format!("{:?}", e))?;
+        let pool =
+            DAMMV2LiquidityPool::get_liquidity_pool_info(&v).map_err(|e| format!("{:?}", e))?;
         Ok(pool)
     }
 
@@ -63,14 +71,19 @@ impl Meteora {
     pub async fn get_liquidity_pool_dyn(
         &self,
         address: &str,
-    ) -> UnifiedResult<DAMMLiquidityPoolData, String> {
+    ) -> Result<DAMMLiquidityPoolData, String> {
         let v = self
-            .solana
-            .get_account_data(address)
+            .solana_client
+            .client_arc()
+            .get_account_data(
+                &Pubkey::from_str(address)
+                    .map_err(|e| format!("{:?}", e))
+                    .unwrap(),
+            )
             .await
-            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
-        let pool = DAMMLiquidityPool::get_liquidity_pool_info(&v)
-            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
+            .map_err(|e| format!("{:?}", e))?;
+        let pool =
+            DAMMLiquidityPool::get_liquidity_pool_info(&v).map_err(|e| format!("{:?}", e))?;
         Ok(pool)
     }
 
@@ -85,14 +98,19 @@ impl Meteora {
     pub async fn get_liquidity_pool_dlmm(
         &self,
         address: &str,
-    ) -> UnifiedResult<DLMMLiquidityPoolData, String> {
+    ) -> Result<DLMMLiquidityPoolData, String> {
         let v = self
-            .solana
-            .get_account_data(address)
+            .solana_client
+            .client_arc()
+            .get_account_data(
+                &Pubkey::from_str(address)
+                    .map_err(|e| format!("{:?}", e))
+                    .unwrap(),
+            )
             .await
-            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
-        let pool = DLMMLiquidityPool::get_liquidity_pool_info(&v)
-            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
+            .map_err(|e| format!("{:?}", e))?;
+        let pool =
+            DLMMLiquidityPool::get_liquidity_pool_info(&v).map_err(|e| format!("{:?}", e))?;
         Ok(pool)
     }
 
@@ -107,14 +125,19 @@ impl Meteora {
     pub async fn get_liquidity_pool_dbc(
         &self,
         address: &str,
-    ) -> UnifiedResult<DynamicBondingCurvePoolData, String> {
+    ) -> Result<DynamicBondingCurvePoolData, String> {
         let v = self
-            .solana
-            .get_account_data(address)
+            .solana_client
+            .client_arc()
+            .get_account_data(
+                &Pubkey::from_str(address)
+                    .map_err(|e| format!("{:?}", e))
+                    .unwrap(),
+            )
             .await
-            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
-        let pool = DynamicBondingCurvePool::get_dbc_pool_info(&v)
-            .map_err(|e| UnifiedError::Error(format!("{:?}", e)))?;
+            .map_err(|e| format!("{:?}", e))?;
+        let pool =
+            DynamicBondingCurvePool::get_dbc_pool_info(&v).map_err(|e| format!("{:?}", e))?;
         Ok(pool)
     }
 }

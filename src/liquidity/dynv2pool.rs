@@ -593,16 +593,14 @@ fn parse_pool_metrics(bytes: &[u8]) -> PoolMetricsData {
 
 #[cfg(test)]
 mod tests {
-    use std::sync::Arc;
-
-    use super::*;
     use crate::Meteora;
-    use solana_network_sdk::Solana;
+    use solana_network_client::{Mode, SolanaClient};
+    use std::sync::Arc;
 
     #[tokio::test]
     async fn test_dammv2_pool_parsing() {
-        let sol = Solana::new(solana_network_sdk::types::Mode::MAIN).unwrap();
-        let meteora = Meteora::new(Arc::new(sol));
+        let solana_client = SolanaClient::new(Mode::MAIN).unwrap();
+        let meteora = Meteora::new(Arc::new(solana_client));
         let pool_data = meteora
             .get_liquidity_pool_dynv2("5gB4NPgFB3MHFHSeKN4sbaY6t9MB8ikCe9HyiKYid4Td")
             .await

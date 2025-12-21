@@ -396,15 +396,14 @@ impl DLMMLiquidityPoolData {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use crate::Meteora;
-    use solana_network_sdk::Solana;
+    use solana_network_client::{Mode, SolanaClient};
     use std::sync::Arc;
 
     #[tokio::test]
     async fn test_dlmm_pool_parsing() {
-        let sol = Solana::new(solana_network_sdk::types::Mode::MAIN).unwrap();
-        let meteora = Meteora::new(Arc::new(sol));
+        let solana_client = SolanaClient::new(Mode::MAIN).unwrap();
+        let meteora = Meteora::new(Arc::new(solana_client));
         let pool_data = meteora
             .get_liquidity_pool_dlmm("BjxkogRUDnb72MSBTfsyuq54yntqxyVKozK9WywMszvZ")
             .await

@@ -475,17 +475,14 @@ impl DynPoolFees {
 
 #[cfg(test)]
 mod tests {
+    use crate::Meteora;
+    use solana_network_client::{Mode, SolanaClient};
     use std::sync::Arc;
 
-    use solana_network_sdk::Solana;
-
-    use crate::Meteora;
-
-    use super::*;
     #[tokio::test]
     async fn test_damm_pool_parsing() {
-        let sol = Solana::new(solana_network_sdk::types::Mode::MAIN).unwrap();
-        let meteora = Meteora::new(Arc::new(sol));
+        let solana_client = SolanaClient::new(Mode::MAIN).unwrap();
+        let meteora = Meteora::new(Arc::new(solana_client));
         let pool_data = meteora
             .get_liquidity_pool_dyn("DqAfrGV2GBxpGRsq6Xk1z9ojRncqgLeeVPaKg5bCc24Z")
             .await
